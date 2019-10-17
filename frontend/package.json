@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/storage-blob": "^10.5.0",
+    "@types/dotenv": "^6.1.1",
     "axios": "^0.17.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

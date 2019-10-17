@@ -9,6 +9,8 @@ const cors = require('cors');
 
 const app = express();
 
+const upload = require('./Upload');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -25,14 +27,17 @@ app.use('/public', express.static(__dirname + '/public'));
 
 
 app.post('/upload', (req, res, next) => {
-  console.log(req);
+  console.log(req.files);
+ 
   let imageFile = req.files.file;
 
   imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
     if (err) {
       return res.status(500).send(err);
     }
-
+    
+    upload.execute(`${__dirname}/public/${req.body.filename}.jpg`);
+    
     res.json({file: `public/${req.body.filename}.jpg`});
   });
 
@@ -56,8 +61,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(8000, () => {
-  console.log('8000');
-});
+app.listen(5000, () => { console.log("Server running on http://localhost:5000");});
 
 module.exports = app;
