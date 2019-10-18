@@ -99,7 +99,7 @@ function test(x){
 
 async function execute(x) {
 
-    const containerName = "demo9";
+    const containerName = "demo12";
     // const blobName = "image.jpg";
     // const content = "hello!";
     const localFilePath =x;
@@ -112,12 +112,15 @@ async function execute(x) {
     // const blockBlobURL = BlockBlobURL.fromContainerURL(containerURL, blobName);
     
     const aborter = Aborter.timeout(30 * ONE_MINUTE);
+    console.log('containerURL',containerURL);
 
-    await containerURL.create(aborter);
-    console.log(`Container: "${containerName}" is created`);
+    await containerURL.create(aborter).catch(err => {
+        console.log('error',err);
+    })
+    // console.log(`Container: "${containerURL}" is created`);
 
-    console.log("Containers:");
-    await showContainerNames(aborter, serviceURL);
+    // console.log("Containers:");
+    // await showContainerNames(aborter, serviceURL);
 
     // await blockBlobURL.upload(aborter, content, content.length);
     // console.log(`Blob "${blobName}" is uploaded`);
@@ -125,8 +128,8 @@ async function execute(x) {
     await uploadLocalFile(aborter, containerURL, localFilePath);
     console.log(`Local file "${localFilePath}" is uploaded`);
 
-    await uploadStream(aborter, containerURL, localFilePath);
-    console.log(`Local file "${localFilePath}" is uploaded as a stream`);
+    // await uploadStream(aborter, containerURL, localFilePath);
+    // console.log(`Local file "${localFilePath}" is uploaded as a stream`);
 
     // console.log(`Blobs in "${containerName}" container:`);
     // await showBlobNames(aborter, containerURL);
